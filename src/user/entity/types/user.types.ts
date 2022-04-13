@@ -1,7 +1,7 @@
 import {Types} from "mongoose";
 
 export interface IUser {
-  _id: Types.ObjectId,
+  _id: Types.ObjectId | string,
   email: string,
   password: string,
   created_at: Date,
@@ -9,7 +9,7 @@ export interface IUser {
 }
 
 export type UserIdType = {
-  _id: Types.ObjectId,
+  _id: Types.ObjectId | string,
 }
 
 export type ISignUpUser = Omit<IUser, '_id' | 'created_at' | 'updated_at'>;

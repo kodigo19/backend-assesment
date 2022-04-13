@@ -27,12 +27,17 @@ export const signUpClientSchema = yup.object({
         return false;
       })
   })
-})
+});
+
+export const signInUserSchema = yup.object({
+  body: yup.object({
+    email: yup.string().email('Invalid email').required('Email is required'),
+    password: yup.string().min(8, 'Min length is 8').required('Password is required'),
+  })
+});
 
 export const emailExistsValidator = async(email: string) => {
-  console.log('Email exists validator');
   const exists = await UserModel.findOne({email});
-  console.log(exists);
   if (exists) {
     throw new ApplicationError(400, 'Email is already taken', 'validation');
   }
@@ -44,6 +49,17 @@ export const reqUserValidator = (schema: any) => async(req: Request, res: Respon
       body: req.body
     });
     await emailExistsValidator(req.body.email);
+    next();
+  } catch (error:any) {
+    next(new ApplicationError(400, error, 'validation'));
+  }
+}
+
+export const reqLoginUserValidator = (schema: any) => async(req: Request, res: Response, next: NextFunction) => {
+  try {
+    await schema.validate({
+      body: req.body
+    });
     next();
   } catch (error:any) {
     next(new ApplicationError(400, error, 'validation'));

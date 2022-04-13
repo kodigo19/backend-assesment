@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest --config ./jest.config.ts",
     "start:dev": "ts-node-dev src/index.ts",
     "start": "node build/src/index.js",
     "build": "tsc"
@@ -27,6 +27,10 @@
     "@types/express": "^4.17.13",
     "@types/jest": "^27.4.1",
     "@types/jsonwebtoken": "^8.5.8",
+    "@types/supertest": "^2.0.12",
+    "jest": "^27.5.1",
+    "mongodb-memory-server": "^8.4.2",
+    "supertest": "^6.2.2",
     "ts-jest": "^27.1.4",
     "ts-node": "^10.7.0",
     "ts-node-dev": "^1.1.8",
