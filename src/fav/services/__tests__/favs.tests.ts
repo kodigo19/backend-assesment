@@ -44,7 +44,7 @@ describe('Favs', () => {
       const {body} = await supertest(app)
         .post('/favs')
         .send(mockData.fakeWrongFavUserId)
-        .set('Authorization', fakeToken.authToken)
+        .set('Authorization', `Bearer ${fakeToken.authToken}`)
         .expect(403);
       expect(body).toEqual({message: "Error: Invalid user Id", type: 'validation'});
     });
@@ -57,7 +57,7 @@ describe('Favs', () => {
       const {body} = await supertest(app)
         .post('/favs')
         .send(mockData.fakeWrongFavName)
-        .set('Authorization', fakeToken.authToken)
+        .set('Authorization', `Bearer ${fakeToken.authToken}`)
         .expect(403);
       expect(body).toEqual({message: "ValidationError: name is required", type: 'validation'});
     });
@@ -68,7 +68,7 @@ describe('Favs', () => {
       const {body} = await supertest(app)
         .post('/favs')
         .send(mockData.fakeWrongFavItemTitle)
-        .set('Authorization', fakeToken.authToken)
+        .set('Authorization', `Bearer ${fakeToken.authToken}`)
         .expect(403);
       expect(body).toEqual({message: "ValidationError: title is required", type: 'validation'});
     });
@@ -78,7 +78,7 @@ describe('Favs', () => {
       const {body} = await supertest(app)
         .post('/favs')
         .send(mockData.fakeWrongFavItemDescription)
-        .set('Authorization', fakeToken.authToken)
+        .set('Authorization', `Bearer ${fakeToken.authToken}`)
         .expect(403);
       expect(body).toEqual({message: "ValidationError: description is required", type: 'validation'});
     });
@@ -88,7 +88,7 @@ describe('Favs', () => {
       const {body} = await supertest(app)
         .post('/favs')
         .send(mockData.fakeWrongFavItemLink)
-        .set('Authorization', fakeToken.authToken)
+        .set('Authorization', `Bearer ${fakeToken.authToken}`)
         .expect(403);
       expect(body).toEqual({message: "ValidationError: link is required", type: 'validation'});
     });
@@ -98,7 +98,7 @@ describe('Favs', () => {
       const {body} = await supertest(app)
         .post('/favs')
         .send(mockData.fakeFav)
-        .set('Authorization', fakeToken.authToken)
+        .set('Authorization', `Bearer ${fakeToken.authToken}`)
         .expect(201);
       expect(body).toEqual({data: mockData.fakeFavResponse, success: true});
     });
@@ -108,7 +108,7 @@ describe('Favs', () => {
       const fakeToken = await createTokenService(mockData.fakeUserId,mockData.fakeUserData);
       const { body } = await supertest(app)
         .get(`/favs?user_id=${mockData.fakeUserId}`)
-        .set('Authorization', fakeToken.authToken)
+        .set('Authorization', `Bearer ${fakeToken.authToken}`)
         .expect(200);
 
       expect(body).toEqual({data:[mockData.fakeFavResponse], success: true});
@@ -122,7 +122,7 @@ describe('Favs', () => {
       const savedFav = await validFav.save();
       const { body } = await supertest(app)
         .delete(`/favs/${savedFav._id}`)
-        .set('Authorization', fakeToken.authToken)
+        .set('Authorization', `Bearer ${fakeToken.authToken}`)
         .expect(200);
     })
   });

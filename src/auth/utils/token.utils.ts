@@ -10,7 +10,13 @@ export const tokenService = {
   },
   validateToken: (token: string) => {
     try {
-      return <jwt.UserIdJwtPayload>(jwt.verify(token, tokenConfig.secret));
+      const tempToken = token;
+      if (tempToken.substring(0,7) != "Bearer ") {
+        throw new Error("Invalid token");
+      }
+      const tokenLen = token.length;
+      const tokenHash = token.substring(7,tokenLen);
+      return <jwt.UserIdJwtPayload>(jwt.verify(tokenHash, tokenConfig.secret));
     } catch (error: any) {
       throw new Error("Invalid token");
     }
