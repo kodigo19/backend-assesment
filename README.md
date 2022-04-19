@@ -293,3 +293,54 @@ POST /auth/local/signup
 ### Response
 
     Status: 204 No Content
+
+## Add item to a Fav List
+
+### Request
+         fetch('/favitem,{
+            method:"POST",
+            headers: new Headers({
+                'Authorization': `Bearer ${authToken}`, 
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }), 
+            body:JSON.stringify(
+                {
+                    "fav_id":"625f28d0c6b61790abe7e012",
+                    "requestFavItem":{
+                        "title": "Cancion 1",
+                        "description": "Descripcion 1",
+                        "link": "link 1"
+                    }
+                }
+            ),
+         })
+            .then(res=>res.json())
+            .then(json=>console.log(json))
+
+### Response
+
+    {
+        "success": true,
+        "data": {
+            "_id": "6250a61007b0dd83e255fb67",
+            "user_id": "624fbbdfea80babf8a455932",
+            "name": "Canciones Favoritas",
+            "fav_items": [
+                {
+                    "title": "Bypass",
+                    "description": "Bachata",
+                    "link": "https://google.com.pe",
+                    "_id": "6250a61007b0dd83e255fb68"
+                },
+                {
+                    "title": "Standby",
+                    "description": "Bachata",
+                    "link": "https://google.com.pe/?standby",
+                    "_id": "6250a61007b0dd83e255fb69"
+                }
+            ],
+            "created_at": "2022-04-08T21:16:00.292Z",
+            "updated_at": "2022-04-08T21:16:00.292Z",
+            "__v": 0
+        }
+    }
